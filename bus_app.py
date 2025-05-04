@@ -4,14 +4,14 @@ import hashlib
 from datetime import datetime
 import pandas as pd
 
-# --- PAGE SETUP ---
+# --- PAGE SETUP --- #
 st.set_page_config(page_title="Blue Bus", layout="wide")
 
-# --- DATABASE SETUP ---
+# --- DATABASE SETUP --- #
 conn = sqlite3.connect("bus_booking.db", check_same_thread=False)
 c = conn.cursor()
 
-# Create user table
+# --Create user table-- #
 c.execute('''
 CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS bookings (
 ''')
 conn.commit()
 
-# --- UTILITY FUNCTIONS ---
+# --- UTILITY FUNCTIONS --- #
 def hash_password(password):
     return hashlib.sha256(password.encode()).hexdigest()
 
@@ -68,7 +68,7 @@ for key in ['stage', 'selected_bus', 'selected_seats', 'passenger_details', 'jou
     if key not in st.session_state:
         st.session_state[key] = None if key != 'stage' else 'search'
 
-# --- SIDEBAR NAVIGATION ---
+# --- SIDEBAR NAVIGATION --- ##
 st.sidebar.title("🧭 Navigation")
 page = st.sidebar.selectbox("Choose Page", ["Login", "Register", "Book Ticket", "Admin Dashboard", "Logout"])
 st.caption("Made by: Girish , Damini , Ann")
@@ -105,7 +105,7 @@ elif page == "Register":
         else:
             st.error("Username already exists.")
 
-# --- LOGOUT ---
+# --- LOGOUT --- #
 elif page == "Logout":
     st.session_state.user = None
     for key in ['stage', 'selected_bus', 'selected_seats', 'journey_info']:
@@ -114,7 +114,7 @@ elif page == "Logout":
     st.session_state.page = "Login"
     st.rerun()
 
-# --- ADMIN DASHBOARD ---
+# --- ADMIN DASHBOARD --- #
 elif page == "Admin Dashboard":
     if not st.session_state.user or st.session_state.user[0] != "girish":
         st.warning("⛔ Access denied. Admins only.")
@@ -128,7 +128,7 @@ elif page == "Admin Dashboard":
             df = pd.DataFrame(rows, columns=[col[0] for col in c.description])
             st.dataframe(df, use_container_width=True)
 
-# --- BOOKING FLOW ---
+# --- BOOKING FLOW --- #
 elif page == "Book Ticket":
     if not st.session_state.user or st.session_state.user[1] == "admin":
         st.warning("Please log in with a user account to book tickets.")
@@ -141,7 +141,7 @@ elif page == "Book Ticket":
         ]
 
         if st.session_state.stage == 'search':
-            st.title("🚌 Book Your Bus")
+            st.title("🚌 Book Your Bus 💺")
             col1, col2, col3 = st.columns(3)
             with col1:
                 source = st.selectbox("From", locations)
@@ -174,7 +174,7 @@ elif page == "Book Ticket":
                         st.rerun()
 
         elif st.session_state.stage == 'select_seats':
-            st.header("Choose Seats")
+            st.header("Choose Seats 💺")
             bus = st.session_state.selected_bus
             seats = bus['SeatsLayout']
             cols = st.columns(bus['Cols'])
