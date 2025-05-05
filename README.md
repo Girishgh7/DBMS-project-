@@ -137,9 +137,9 @@ A Streamlit-based multi-page web application that enables users to register, log
 
 | Name   | Role                          |
 | ------ | ----------------------------- |
-| Girish | Developer / Admin login logic |
-| Damini | UI / Booking System           |
-| Ann    | Database Design / Integration |
+| Girish | Developer  |
+| Damini | Admin page |
+| Ann    | Er Diagram |
 
 ---
 
